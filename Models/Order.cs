@@ -1,6 +1,4 @@
-﻿using InvestimentApi.Models;
-
-namespace InvestimentApi.Data
+﻿namespace InvestimentApi.Models
 {
     public class Order
     {

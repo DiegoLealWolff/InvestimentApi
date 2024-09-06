@@ -48,21 +48,14 @@ namespace InvestimentApi.Repositories
 
         public async Task SaveCalculationAsync(OrderCalculation calculation)
         {
-            
-            using (var transaction = await _context.Database.BeginTransactionAsync())
+            try
             {
-                try
-                {                    
-                    _context.OrderCalculations.Add(calculation);
-                    await _context.SaveChangesAsync();                
-
-                    await transaction.CommitAsync();
-                }
-                catch (Exception)
-                {
-                    await transaction.RollbackAsync();
-                    throw;
-                }
+                _context.OrderCalculations.Add(calculation);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

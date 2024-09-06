@@ -27,11 +27,7 @@ namespace InvestimentApi.HostedServices
             var exitEvent = new ManualResetEvent(false);
 
             // Iniciar um timer que a cada 5 segundos irá calcular os preços
-            _timer = new Timer(CalculatePrices, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
-
-            //using var communicator = new BitstampWebsocketCommunicator(url);
-            //_client = new BitstampWebsocketClient(communicator);
-            //_client.Streams.OrderBookStream.Subscribe(HandleOrderBookMessage);
+            _timer = new Timer(CalculatePrices, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));  
 
             // Aqui fica o loop de execução principal (WebSocket)
             while (!stoppingToken.IsCancellationRequested)
@@ -51,7 +47,7 @@ namespace InvestimentApi.HostedServices
             }
         }
 
-        private async void HandleOrderBookMessage(OrderBookResponse book)
+        public async void HandleOrderBookMessage(OrderBookResponse book)
         {
             if (book == null || book.Data == null)
             {
@@ -91,7 +87,7 @@ namespace InvestimentApi.HostedServices
             }
         }
 
-        private void CalculatePrices(object? state)
+        public void CalculatePrices(object? state)
         {
             using (var scope = _serviceScopeFactory.CreateScope())
             {

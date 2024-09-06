@@ -38,7 +38,7 @@ namespace InvestimentApi.Data
                .HasColumnType("decimal(15,5)");
 
             modelBuilder.Entity<OrderBookItem>()
-            .HasKey(obi => obi.OrderBookItemId);
+               .HasKey(obi => obi.OrderBookItemId);
 
             modelBuilder.Entity<OrderBookItem>()
                .Property(p => p.Quantity)

@@ -1,5 +1,4 @@
-﻿using InvestimentApi.Data;
-using InvestimentApi.Models;
+﻿using InvestimentApi.Models;
 
 namespace InvestimentApi.Repositories
 {

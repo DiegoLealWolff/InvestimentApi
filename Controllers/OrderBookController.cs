@@ -21,7 +21,7 @@ namespace InvestimentApi.Controllers
         {
             if (string.IsNullOrEmpty(assetPair) || quantity <= 0)
             {
-                return BadRequest("Invalid request data.");
+                return NoContent();
             }
 
             try

@@ -8,6 +8,5 @@
         public decimal Price { get; set; }
         public decimal Quantity { get; set; }
         public DateTime Date { get; set; }
-
     }
 }

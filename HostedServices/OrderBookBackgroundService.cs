@@ -54,11 +54,9 @@ namespace InvestimentApi.HostedServices
                 _logger.LogWarning("Received empty book data.");
                 return;
             }
-
-            // Determinar o par de moedas
-            var assetPair = book.Channel.Contains("btcusd") ? "BTC/USD" : "ETH/USD";
-
-            // Persistir as ordens no banco de dados
+         
+            var asset = book.Channel.Contains("btcusd") ? "BTC/USD" : "ETH/USD";
+                       
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var orderBookService = scope.ServiceProvider.GetRequiredService<IOrderBookService>();
@@ -67,7 +65,7 @@ namespace InvestimentApi.HostedServices
                 {
                     await orderBookService.AddOrderAsync(new OrderDto
                     {
-                        AssetPair = assetPair,
+                        Asset = asset,
                         OrderType = OrderType.Sell,
                         Price = Convert.ToDecimal(ask.Price),
                         Quantity = Convert.ToDecimal(ask.Amount)
@@ -78,7 +76,7 @@ namespace InvestimentApi.HostedServices
                 {
                     await orderBookService.AddOrderAsync(new OrderDto
                     {
-                        AssetPair = assetPair,
+                        Asset = asset,
                         OrderType = OrderType.Buy,
                         Price = Convert.ToDecimal(bid.Price),
                         Quantity = Convert.ToDecimal(bid.Amount)
@@ -117,9 +115,12 @@ namespace InvestimentApi.HostedServices
                     //Média de quantidade acumulada
                     var avgBtcQuantity = btcOrders.Average(o => o.Quantity);
 
-                    Console.WriteLine($"BTC/USD - Maior Preço: {maxBtcPrice}, Menor Preço: {minBtcPrice}, Média de Preço: {avgBtcPrice}" +
-                                      $", Média de Preço Acumulada: {weightedAvgBtcPrice}, " +
-                                      $", Média de Quantidade Acumulada: {avgBtcQuantity}");
+                    Console.WriteLine($"BTC/USD:" +
+                                      $"\n- Maior Preço: {maxBtcPrice}" +
+                                      $"\n- Menor Preço: {minBtcPrice}" +
+                                      $"\n- Média de Preço: {avgBtcPrice}" +
+                                      $"\n- Média de Preço Acumulada: {weightedAvgBtcPrice}, " +
+                                      $"\n- Média de Quantidade Acumulada: {avgBtcQuantity}");
                 }
 
                 // Cálculos para ETH/USD
@@ -139,9 +140,12 @@ namespace InvestimentApi.HostedServices
                     //Média de quantidade acumulada
                     var avgEthQuantity = ethOrders.Average(o => o.Quantity);
 
-                    Console.WriteLine($"ETH/USD - Maior Preço: {maxEthPrice}, Menor Preço: {minEthPrice}, Média de Preço: {avgEthPrice}" +
-                                      $", Média de Preço Acumulada: {weightedAvgEthPrice}, " +
-                                      $", Média de Quantidade Acumulada: {avgEthQuantity}");
+                    Console.WriteLine($"ETH/USD:" +
+                                      $"\n- Maior Preço: {maxEthPrice}" +
+                                      $"\n- Menor Preço: {minEthPrice}" +
+                                      $"\n- Média de Preço: {avgEthPrice}" +
+                                      $"\n- Média de Preço Acumulada: {weightedAvgEthPrice}" +
+                                      $"\n- Média de Quantidade Acumulada: {avgEthQuantity}\n");
                 }
             }
         }

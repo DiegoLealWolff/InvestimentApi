@@ -20,11 +20,11 @@ namespace InvestimentApi.Data
 
             modelBuilder.Entity<Order>()
                 .Property(p => p.Quantity)
-                .HasColumnType("decimal(16,12");
+                .HasColumnType("decimal(16,12)");        
 
             modelBuilder.Entity<Order>()
-               .Property(p => p.Price)
-               .HasColumnType("decimal(10,3)");
+               .Property(p => p.Price)               
+               .HasColumnType("decimal");
 
             modelBuilder.Entity<OrderCalculation>()
                .HasKey(o => o.OrderCalculationId);
@@ -42,11 +42,11 @@ namespace InvestimentApi.Data
 
             modelBuilder.Entity<OrderBookItem>()
                .Property(p => p.Quantity)
-               .HasColumnType("decimal(16,12");
+               .HasColumnType("decimal(16,12)");
 
             modelBuilder.Entity<OrderBookItem>()
                .Property(p => p.Price)
-               .HasColumnType("decimal(10,3)");
+               .HasColumnType("decimal(10,3)");            
         }
     }
 }

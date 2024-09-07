@@ -17,16 +17,16 @@ namespace InvestimentApi.Controllers
         }
 
         [HttpGet("CalculateBestOrder")]
-        public async Task<IActionResult> GetCalculateBestOrder([FromQuery] string assetPair, [FromQuery] OrderType orderType, [FromQuery] decimal quantity)
+        public async Task<IActionResult> GetCalculateBestOrder([FromQuery] string asset, [FromQuery] OrderType orderType, [FromQuery] decimal quantity)
         {
-            if (string.IsNullOrEmpty(assetPair) || quantity <= 0)
+            if (string.IsNullOrEmpty(asset) || quantity <= 0)
             {
                 return NoContent();
             }
 
             try
             {                          
-                var result = await _orderBookService.GetBestOrderAsync(assetPair, orderType, quantity);
+                var result = await _orderBookService.GetBestOrderAsync(asset, orderType, quantity);
                 return Ok(result);
             }
             catch (Exception ex)

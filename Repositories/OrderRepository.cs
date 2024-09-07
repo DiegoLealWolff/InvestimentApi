@@ -19,30 +19,30 @@ namespace InvestimentApi.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Order>> GetOrdersAsync(string assetPair, OrderType orderType)
+        public async Task<List<Order>> GetOrdersAsync(string asset, OrderType orderType)
         {
             return await _context.Orders
-                .Where(o => o.Asset == assetPair && o.OrderType == orderType)
+                .Where(o => o.Asset == asset && o.OrderType == orderType)
                 .OrderBy(o => o.Price)
                 .ToListAsync();
         }
 
-        public async Task<(decimal MinPrice, decimal MaxPrice)> GetMinMaxPricesAsync(string assetPair)
+        public async Task<(decimal MinPrice, decimal MaxPrice)> GetMinMaxPricesAsync(string asset)
         {
             var minPrice = await _context.Orders
-                .Where(o => o.Asset == assetPair)
+                .Where(o => o.Asset == asset)
                 .MinAsync(o => o.Price);
             var maxPrice = await _context.Orders
-                .Where(o => o.Asset == assetPair)
+                .Where(o => o.Asset == asset)
                 .MaxAsync(o => o.Price);
 
             return (minPrice, maxPrice);
         }
 
-        public async Task<List<Order>> GetAsync(string assetPair, DateTime startTime, DateTime endTime)
+        public async Task<List<Order>> GetAsync(string asset, DateTime startTime, DateTime endTime)
         {
             return await _context.Orders
-            .Where(o => o.Asset == assetPair && o.Date >= startTime && o.Date <= endTime)
+            .Where(o => o.Asset == asset && o.Date >= startTime && o.Date <= endTime)
             .ToListAsync();
         }
 

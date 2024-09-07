@@ -16,7 +16,7 @@ namespace InvestimentApi.Services
         {
             var order = new Order
             {
-                Asset = orderDto.AssetPair,
+                Asset = orderDto.Asset,
                 OrderType = orderDto.OrderType,
                 Price = orderDto.Price,
                 Quantity = orderDto.Quantity,
@@ -26,17 +26,17 @@ namespace InvestimentApi.Services
             await _orderRepository.AddOrderAsync(order);
         }
 
-        public async Task<List<Order>> GetAsync(string assetPair, DateTime startTime)
+        public async Task<List<Order>> GetAsync(string asset, DateTime startTime)
         {           
-            return await _orderRepository.GetAsync(assetPair, startTime, DateTime.Now);
+            return await _orderRepository.GetAsync(asset, startTime, DateTime.Now);
         }
 
-        public async Task<OrderCalculationResponseDto> GetBestOrderAsync(string assetPair, OrderType orderType, decimal quantity)
+        public async Task<OrderCalculationResponseDto> GetBestOrderAsync(string asset, OrderType orderType, decimal quantity)
         {
-            var orderBook = await _orderRepository.GetOrdersAsync(assetPair, orderType);
+            var orderBook = await _orderRepository.GetOrdersAsync(asset, orderType);
             if (orderBook == null)
             {
-                throw new Exception($"OrderBook for {assetPair} not found.");
+                throw new Exception($"OrderBook for {asset} not found.");
             }
 
             List<OrderBookItem> usedOrders = new List<OrderBookItem>();
@@ -44,8 +44,7 @@ namespace InvestimentApi.Services
             decimal totalPrice = 0;
 
             if (orderType == OrderType.Buy)
-            {
-                // Comprar: usar asks (ordens de venda) ordenadas por preço crescente
+            {                
                 var asks = orderBook.Where(item => item.OrderType == OrderType.Buy).OrderBy(o => o.Price).ToList();
 
                 foreach (var ask in asks)
@@ -69,8 +68,7 @@ namespace InvestimentApi.Services
                 }
             }
             else if (orderType == OrderType.Sell)
-            {
-                // Vender: usar bids (ordens de compra) ordenadas por preço decrescente
+            {                
                 var bids = orderBook.Where(item => item.OrderType == OrderType.Sell).OrderByDescending(o => o.Price).ToList();
 
                 foreach (var bid in bids)
@@ -100,7 +98,7 @@ namespace InvestimentApi.Services
 
             if (totalQuantity < quantity)
             {
-                throw new Exception($"Insufficient liquidity to fulfill {quantity} {assetPair}.");
+                throw new Exception($"Insufficient liquidity to fulfill {quantity} {asset}.");
             }
            
             var orderCalculationId = Guid.NewGuid();
@@ -108,7 +106,7 @@ namespace InvestimentApi.Services
             await _orderRepository.SaveCalculationAsync(new OrderCalculation
             {
                 OrderCalculationId = orderCalculationId,
-                Asset = assetPair,
+                Asset = asset,
                 OrderType = orderType,
                 TotalQuantity = quantity,
                 TotalPrice = totalPrice,
@@ -118,7 +116,7 @@ namespace InvestimentApi.Services
             return new OrderCalculationResponseDto
             {
                 OrderCalculationId = orderCalculationId,
-                Asset = assetPair,
+                Asset = asset,
                 OrderType = orderType.ToString(),
                 Quantity = quantity,
                 UsedOrders = usedOrders,

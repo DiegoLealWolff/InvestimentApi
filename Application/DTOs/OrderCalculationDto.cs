@@ -2,7 +2,7 @@
 
 namespace InvestimentApi.Application.DTOs
 {
-    public class OrderCalculationResponseDto
+    public class OrderCalculationDto
     {
         public Guid OrderCalculationId { get; set; }
         public string? Asset { get; set; }

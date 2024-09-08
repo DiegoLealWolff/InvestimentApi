@@ -34,7 +34,7 @@ namespace InvestimentApi.Application.Services
             return await _orderRepository.GetAsync(asset, startTime, DateTime.Now);
         }
 
-        public async Task<OrderCalculationResponseDto> GetBestOrderAsync(string asset, OrderType orderType, decimal quantity)
+        public async Task<OrderCalculationDto> GetBestOrderAsync(string asset, OrderType orderType, decimal quantity)
         {
             var orderBook = await _orderRepository.GetOrdersAsync(asset, orderType);
             if (orderBook == null)
@@ -116,7 +116,7 @@ namespace InvestimentApi.Application.Services
                 UsedOrders = usedOrders
             });
 
-            return new OrderCalculationResponseDto
+            return new OrderCalculationDto
             {
                 OrderCalculationId = orderCalculationId,
                 Asset = asset,

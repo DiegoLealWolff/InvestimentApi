@@ -1,4 +1,4 @@
-﻿namespace InvestimentApi.Models
+﻿namespace InvestimentApi.Domain.Enum
 {
     public enum OrderType
     {

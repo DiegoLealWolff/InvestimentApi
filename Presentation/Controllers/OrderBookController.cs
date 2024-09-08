@@ -1,9 +1,8 @@
-﻿using Azure.Core;
-using InvestimentApi.Models;
-using InvestimentApi.Services;
+﻿using InvestimentApi.Application.Services.Interfaces;
+using InvestimentApi.Domain.Enum;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InvestimentApi.Controllers
+namespace InvestimentApi.Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -25,14 +24,14 @@ namespace InvestimentApi.Controllers
             }
 
             try
-            {                          
+            {
                 var result = await _orderBookService.GetBestOrderAsync(asset, orderType, quantity);
                 return Ok(result);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-            }            
+            }
         }
     }
 }

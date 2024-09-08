@@ -1,8 +1,10 @@
-﻿using InvestimentApi.Data;
-using InvestimentApi.Models;
+﻿using InvestimentApi.Domain.Entities;
+using InvestimentApi.Domain.Enum;
+using InvestimentApi.Domain.Interfaces;
+using InvestimentApi.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace InvestimentApi.Repositories
+namespace InvestimentApi.Infrastructure.Repositories
 {
     public class OrderRepository : IOrderRepository
     {

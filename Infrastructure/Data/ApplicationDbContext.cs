@@ -1,7 +1,7 @@
-﻿using InvestimentApi.Models;
+﻿using InvestimentApi.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace InvestimentApi.Data
+namespace InvestimentApi.Infrastructure.Data
 {
     public class ApplicationDbContext : DbContext
     {
@@ -20,10 +20,10 @@ namespace InvestimentApi.Data
 
             modelBuilder.Entity<Order>()
                 .Property(p => p.Quantity)
-                .HasColumnType("decimal(16,12)");        
+                .HasColumnType("decimal(16,12)");
 
             modelBuilder.Entity<Order>()
-               .Property(p => p.Price)               
+               .Property(p => p.Price)
                .HasColumnType("decimal");
 
             modelBuilder.Entity<OrderCalculation>()
@@ -46,7 +46,7 @@ namespace InvestimentApi.Data
 
             modelBuilder.Entity<OrderBookItem>()
                .Property(p => p.Price)
-               .HasColumnType("decimal(10,3)");            
+               .HasColumnType("decimal(10,3)");
         }
     }
 }

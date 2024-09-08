@@ -1,7 +1,9 @@
-using InvestimentApi.Data;
-using InvestimentApi.HostedServices;
-using InvestimentApi.Repositories;
-using InvestimentApi.Services;
+using InvestimentApi.Application.Services;
+using InvestimentApi.Application.Services.Interfaces;
+using InvestimentApi.Domain.Interfaces;
+using InvestimentApi.Infrastructure.Data;
+using InvestimentApi.Infrastructure.Repositories;
+using InvestimentApi.Web.HostedServices;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +23,7 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(); 
+    app.UseSwagger();
     app.UseSwaggerUI();
 }
 app.UseHttpsRedirection();

@@ -1,7 +1,10 @@
-﻿using InvestimentApi.Models;
-using InvestimentApi.Repositories;
+﻿using InvestimentApi.Application.DTOs;
+using InvestimentApi.Application.Services.Interfaces;
+using InvestimentApi.Domain.Entities;
+using InvestimentApi.Domain.Enum;
+using InvestimentApi.Domain.Interfaces;
 
-namespace InvestimentApi.Services
+namespace InvestimentApi.Application.Services
 {
     public class OrderBookService : IOrderBookService
     {
@@ -27,7 +30,7 @@ namespace InvestimentApi.Services
         }
 
         public async Task<List<Order>> GetAsync(string asset, DateTime startTime)
-        {           
+        {
             return await _orderRepository.GetAsync(asset, startTime, DateTime.Now);
         }
 
@@ -44,7 +47,7 @@ namespace InvestimentApi.Services
             decimal totalPrice = 0;
 
             if (orderType == OrderType.Buy)
-            {                
+            {
                 var asks = orderBook.Where(item => item.OrderType == OrderType.Buy).OrderBy(o => o.Price).ToList();
 
                 foreach (var ask in asks)
@@ -68,7 +71,7 @@ namespace InvestimentApi.Services
                 }
             }
             else if (orderType == OrderType.Sell)
-            {                
+            {
                 var bids = orderBook.Where(item => item.OrderType == OrderType.Sell).OrderByDescending(o => o.Price).ToList();
 
                 foreach (var bid in bids)
@@ -100,9 +103,9 @@ namespace InvestimentApi.Services
             {
                 throw new Exception($"Insufficient liquidity to fulfill {quantity} {asset}.");
             }
-           
+
             var orderCalculationId = Guid.NewGuid();
-           
+
             await _orderRepository.SaveCalculationAsync(new OrderCalculation
             {
                 OrderCalculationId = orderCalculationId,
@@ -112,7 +115,7 @@ namespace InvestimentApi.Services
                 TotalPrice = totalPrice,
                 UsedOrders = usedOrders
             });
-            
+
             return new OrderCalculationResponseDto
             {
                 OrderCalculationId = orderCalculationId,

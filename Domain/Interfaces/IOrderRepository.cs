@@ -1,6 +1,7 @@
-﻿using InvestimentApi.Models;
+﻿using InvestimentApi.Domain.Entities;
+using InvestimentApi.Domain.Enum;
 
-namespace InvestimentApi.Repositories
+namespace InvestimentApi.Domain.Interfaces
 {
     public interface IOrderRepository
     {

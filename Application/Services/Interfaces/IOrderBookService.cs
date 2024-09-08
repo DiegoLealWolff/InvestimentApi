@@ -1,6 +1,8 @@
-﻿using InvestimentApi.Models;
+﻿using InvestimentApi.Application.DTOs;
+using InvestimentApi.Domain.Entities;
+using InvestimentApi.Domain.Enum;
 
-namespace InvestimentApi.Services
+namespace InvestimentApi.Application.Services.Interfaces
 {
     public interface IOrderBookService
     {

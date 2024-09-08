@@ -3,10 +3,11 @@ using Bitstamp.Client.Websocket.Client;
 using Bitstamp.Client.Websocket.Communicator;
 using Bitstamp.Client.Websocket.Requests;
 using Bitstamp.Client.Websocket.Responses.Books;
-using InvestimentApi.Models;
-using InvestimentApi.Services;
+using InvestimentApi.Application.DTOs;
+using InvestimentApi.Application.Services.Interfaces;
+using InvestimentApi.Domain.Enum;
 
-namespace InvestimentApi.HostedServices
+namespace InvestimentApi.Web.HostedServices
 {
     public class OrderBookBackgroundService : BackgroundService
     {
@@ -27,7 +28,7 @@ namespace InvestimentApi.HostedServices
             var exitEvent = new ManualResetEvent(false);
 
             // Iniciar um timer que a cada 5 segundos irá calcular os preços
-            _timer = new Timer(CalculatePrices, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));  
+            _timer = new Timer(CalculatePrices, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
 
             // Aqui fica o loop de execução principal (WebSocket)
             while (!stoppingToken.IsCancellationRequested)
@@ -54,9 +55,9 @@ namespace InvestimentApi.HostedServices
                 _logger.LogWarning("Received empty book data.");
                 return;
             }
-         
+
             var asset = book.Channel.Contains("btcusd") ? "BTC/USD" : "ETH/USD";
-                       
+
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var orderBookService = scope.ServiceProvider.GetRequiredService<IOrderBookService>();

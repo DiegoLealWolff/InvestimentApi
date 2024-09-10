@@ -19,7 +19,8 @@ namespace InvestimentApi.Application.Services
             _orderRepository = orderRepository;
             _strategyFactory = strategyFactory;
             _orderFactory = orderFactory;
-        }      
+        }
+        
         public async Task<OrderCalculationDto> GetBestOrderAsync(string asset, OrderType orderType, decimal quantity)
         {
             var orderBook = await _orderRepository.GetOrdersAsync(asset, orderType);
@@ -29,13 +30,8 @@ namespace InvestimentApi.Application.Services
             }
 
             var strategy = _strategyFactory.GetStrategy(orderType);
-            var bestOrders = await strategy.GetBestOrdersAsync(orderBook, quantity, asset);
-          
-            if (bestOrders.TotalQuantity < quantity)
-            {
-                throw new Exception($"Insufficient liquidity to fulfill {quantity} {asset}.");
-            }        
-
+            var bestOrders = await strategy.GetBestOrdersAsync(orderBook, quantity, asset);         
+     
             SaveCalculationAsync(bestOrders);
 
             return new OrderCalculationDto

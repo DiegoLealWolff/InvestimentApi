@@ -1,4 +1,4 @@
-﻿using InvestimentApi.Domain.Enum;
+﻿using InvestimentApi.Domain.Enums;
 
 namespace InvestimentApi.Application.DTOs
 {

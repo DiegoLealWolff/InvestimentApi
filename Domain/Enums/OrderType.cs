@@ -1,4 +1,4 @@
-﻿namespace InvestimentApi.Domain.Enum
+﻿namespace InvestimentApi.Domain.Enums
 {
     public enum OrderType
     {

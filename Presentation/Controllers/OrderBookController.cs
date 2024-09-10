@@ -1,5 +1,5 @@
 ﻿using InvestimentApi.Application.Services.Interfaces;
-using InvestimentApi.Domain.Enum;
+using InvestimentApi.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvestimentApi.Web.Controllers

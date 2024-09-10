@@ -1,6 +1,6 @@
 ﻿using InvestimentApi.Application.DTOs;
 using InvestimentApi.Domain.Entities;
-using InvestimentApi.Domain.Enum;
+using InvestimentApi.Domain.Enums;
 
 namespace InvestimentApi.Application.Services.Interfaces
 {
@@ -8,6 +8,6 @@ namespace InvestimentApi.Application.Services.Interfaces
     {
         Task AddOrderAsync(OrderDto orderDto);
         Task<OrderCalculationDto> GetBestOrderAsync(string asset, OrderType orderType, decimal quantity);
-        Task<List<Order>> GetAsync(string asset, DateTime startTime);
+        Task<List<Order>> GetOrdersAsync(string asset, DateTime startTime);
     }
 }

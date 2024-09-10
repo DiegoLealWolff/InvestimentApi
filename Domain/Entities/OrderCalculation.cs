@@ -1,5 +1,5 @@
 ﻿using InvestimentApi.Domain.Entities;
-using InvestimentApi.Domain.Enum;
+using InvestimentApi.Domain.Enums;
 
 public class OrderCalculation
 {

@@ -1,6 +1,9 @@
 using InvestimentApi.Application.Services;
 using InvestimentApi.Application.Services.Interfaces;
+using InvestimentApi.Domain.Factories;
 using InvestimentApi.Domain.Interfaces;
+using InvestimentApi.Domain.Interfaces.Strategies;
+using InvestimentApi.Domain.Strategies;
 using InvestimentApi.Infrastructure.Data;
 using InvestimentApi.Infrastructure.Repositories;
 using InvestimentApi.Web.HostedServices;
@@ -17,6 +20,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderBookService, OrderBookService>();
+builder.Services.AddScoped<IOrderStrategyFactory, OrderStrategyFactory>();
+builder.Services.AddScoped<OrderFactory>();
 builder.Services.AddHostedService<OrderBookBackgroundService>();
 
 var app = builder.Build();

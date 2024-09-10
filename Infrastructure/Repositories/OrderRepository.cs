@@ -1,5 +1,5 @@
 ﻿using InvestimentApi.Domain.Entities;
-using InvestimentApi.Domain.Enum;
+using InvestimentApi.Domain.Enums;
 using InvestimentApi.Domain.Interfaces;
 using InvestimentApi.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -41,7 +41,7 @@ namespace InvestimentApi.Infrastructure.Repositories
             return (minPrice, maxPrice);
         }
 
-        public async Task<List<Order>> GetAsync(string asset, DateTime startTime, DateTime endTime)
+        public async Task<List<Order>> GetOrdersAsync(string asset, DateTime startTime, DateTime endTime)
         {
             return await _context.Orders
             .Where(o => o.Asset == asset && o.Date >= startTime && o.Date <= endTime)

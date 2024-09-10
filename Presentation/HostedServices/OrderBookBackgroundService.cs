@@ -5,7 +5,7 @@ using Bitstamp.Client.Websocket.Requests;
 using Bitstamp.Client.Websocket.Responses.Books;
 using InvestimentApi.Application.DTOs;
 using InvestimentApi.Application.Services.Interfaces;
-using InvestimentApi.Domain.Enum;
+using InvestimentApi.Domain.Enums;
 
 namespace InvestimentApi.Web.HostedServices
 {
@@ -96,8 +96,8 @@ namespace InvestimentApi.Web.HostedServices
                 var fiveSecondsAgo = DateTime.Now.AddSeconds(-5);
 
                 // Buscar ordens de BTC/USD e ETH/USD nos últimos 5 segundos
-                var btcOrders = orderBookService.GetAsync("BTC/USD", fiveSecondsAgo).Result;
-                var ethOrders = orderBookService.GetAsync("ETH/USD", fiveSecondsAgo).Result;
+                var btcOrders = orderBookService.GetOrdersAsync("BTC/USD", fiveSecondsAgo).Result;
+                var ethOrders = orderBookService.GetOrdersAsync("ETH/USD", fiveSecondsAgo).Result;
 
                 // Cálculos para BTC/USD
                 if (btcOrders.Any())
